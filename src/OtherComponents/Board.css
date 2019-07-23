@@ -19,6 +19,7 @@
      padding-left:0px;
      padding-right:0px;
      text-align: center;
+     display: inline-block;
      -webkit-transition-duration: 0.4s; 
      transition-duration: 0.4s;
      cursor: pointer;

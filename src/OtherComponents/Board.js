@@ -264,7 +264,7 @@ class Board extends Component {
                 <Modal
                     visible={this.state.visible}
                     title="GAME FINISHED"
-                    okText="Create"
+                    okText="Submit"
                     onCancel={this.handleCancel}
                     onOk={this.handleCreate}
                 >
@@ -275,7 +275,7 @@ class Board extends Component {
                             })(<Input type="text" />)}
                         </Form.Item>
                         <Form.Item label="Your Score:">
-                            {getFieldDecorator('score', {initialValue : this.state.counter} )(<Input type="text"  />)}
+                            {getFieldDecorator('score', {initialValue : this.state.counter} )(<Input type="text" disabled="true" />)}
                         </Form.Item>
                     </Form>
                 </Modal>
