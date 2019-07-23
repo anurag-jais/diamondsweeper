@@ -1,0 +1,25 @@
+/* .container{
+    text-align: center;
+    align-content: center;
+   } */
+   /* .buttonbox{    
+    width: 64px;
+    height: 64px;
+    display: inline-block; 
+   } */
+   .board{
+    display: inline-flex;
+    flex-wrap:wrap;
+    width: 550px;
+    }
+    .button {
+     height:60px;
+     width:60px;
+     margin:2px;
+     padding-left:0px;
+     padding-right:0px;
+     text-align: center;
+     -webkit-transition-duration: 0.4s; 
+     transition-duration: 0.4s;
+     cursor: pointer;
+   }
