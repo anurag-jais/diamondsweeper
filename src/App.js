@@ -8,11 +8,11 @@ class App extends Component {
   state = {
     isGamefinish : false,
     score: 0,
-    
+    isStartGameClicked: false,
     listPlayer: [],
     isleaderBoardClicked: false,
-    visible: false
-    
+    visible: false,
+    resetgame: false
   }
   showModal = () => {
     this.setState({
@@ -34,24 +34,26 @@ class App extends Component {
     });
   };
 
-
-
-
-
+  resetGame = ()=>{
+    this.setState({
+      resetgame : false
+    });
+  }
   showScore = (counter) =>{
     this.setState({
       isGamefinish : true,
-      score: counter,
-      isStartGameClicked : false,
-      isreset: false
+      score: counter
     });
   }
 
   startGame = ()=>{
     let clicked = this.state.isStartGameClicked;
-    //alert("I'm running");
+    
     this.setState({
-      isStartGameClicked : true 
+      isStartGameClicked : true,
+      isGamefinish: false,
+      resetgame: true
+      
     });
   }
 
@@ -81,9 +83,7 @@ class App extends Component {
     
   } 
   render() {
-    console.log(this.state.isleaderBoardClicked);
-    console.log(this.state.listPlayer);
-    
+   
     return (
       <div className="App">
         <h3>Diamond Sweeper</h3>
@@ -92,10 +92,10 @@ class App extends Component {
         <br></br>
         <Button onClick={this.startGame}>Start Game</Button>
         <Button onClick= {this.MakeLeaderBoard}>LeaderBoard</Button>
-        {this.state.isStartGameClicked === true ? <Board showScore = {this.showScore}/> : null}
+        {this.state.isStartGameClicked === true ? <Board  resetgame = {this.state.resetgame} resetGame = {this.resetGame} showScore = {this.showScore}/> : null}
+        
         {
         this.state.isleaderBoardClicked === true ? 
-        
         <Modal
         title="LeaderBoard"
         visible={this.state.visible}

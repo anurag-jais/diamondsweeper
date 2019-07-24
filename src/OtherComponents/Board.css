@@ -7,12 +7,22 @@
     height: 64px;
     display: inline-block; 
    } */
-   .board{
-    display: inline-flex;
-    flex-wrap:wrap;
-    width: 550px;
+.board{
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+   width: 549px; 
+}
+  
+  
+    .button{
+      height:59px;
+      width:59px;
+      margin: 2px;
+      text-align: center;
+      /* display: inline-block; */
     }
-    .button {
+    /* .button {
      height:60px;
      width:60px;
      margin:2px;
@@ -23,4 +33,4 @@
      -webkit-transition-duration: 0.4s; 
      transition-duration: 0.4s;
      cursor: pointer;
-   }
+   } */

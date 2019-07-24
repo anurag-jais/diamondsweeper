@@ -4,6 +4,7 @@ import { Button, Modal, Form, Input } from 'antd';
 import { Icon } from 'antd';
 
 
+
 let arr = [
     ['?', '?', '?', '?', '?', '?', '?', '?'],
     ['?', '?', '?', '?', '?', '?', '?', '?'],
@@ -27,6 +28,9 @@ let color = [
     ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue']
 ];
 
+
+
+
 class Board extends Component {
     state = {
         board: arr,
@@ -37,10 +41,126 @@ class Board extends Component {
         savex: -1,
         savey: -1,
         counter: 56,
-        visible: false
+        visible: false,
+        //reset: this.props.resetgame,
+        flag: false
     }
 
 
+    // init = ()=>{
+    //     let boardreset = [
+    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
+    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
+    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
+    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
+    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
+    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
+    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
+    //         ['?', '?', '?', '?', '?', '?', '?', '?']
+    //       ];
+    //     //console.log(boardreset);
+    //     let randomArray = [];
+    //     let distanceArray = [];
+    //     let colorboard = [
+    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue']
+    //       ];
+    //     let savex = -1;
+    //     //savex = -1;
+    //     let savey = -1;
+    //     savey = -1;
+    //     let counter = 56;
+    //     let visible = false;
+    //     this.setState({
+    //     board: boardreset,
+    //     //board: Array(8).fill(Array(8).fill('?')),
+    //     randomArray: randomArray,
+    //     distanceArray: distanceArray,
+    //     colorboard: colorboard,
+    //     savex: savex,
+    //     savey: savey,
+    //     counter: counter,
+    //     visible: visible,
+    //     flag: true
+    //    });
+    // }
+
+    componentWillReceiveProps(nextprops) {
+        console.log("flag");
+        console.log(nextprops);
+        console.log(nextprops.resetgame);
+        if ((nextprops.resetgame) === true) {
+            alert("I'm running");
+            let boardreset = [
+                ['?', '?', '?', '?', '?', '?', '?', '?'],
+                ['?', '?', '?', '?', '?', '?', '?', '?'],
+                ['?', '?', '?', '?', '?', '?', '?', '?'],
+                ['?', '?', '?', '?', '?', '?', '?', '?'],
+                ['?', '?', '?', '?', '?', '?', '?', '?'],
+                ['?', '?', '?', '?', '?', '?', '?', '?'],
+                ['?', '?', '?', '?', '?', '?', '?', '?'],
+                ['?', '?', '?', '?', '?', '?', '?', '?']
+            ];
+            //console.log(boardreset);
+            let randomArray = [];
+            let distanceArray = [];
+            let colorboard = [
+                ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+                ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+                ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+                ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+                ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+                ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+                ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
+                ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue']
+            ];
+            let savex = -1;
+            //savex = -1;
+            let savey = -1;
+            savey = -1;
+            let counter = 56;
+            let visible = false;
+            this.setState({
+                board: boardreset,
+                //board: Array(8).fill(Array(8).fill('?')),
+                randomArray: randomArray,
+                distanceArray: distanceArray,
+                colorboard: colorboard,
+                savex: savex,
+                savey: savey,
+                counter: counter,
+                visible: visible
+            });
+            randomArray = this.state.randomArray;
+            randomArray.length = 0;
+            for (let i = 0; i < 8; i++) {
+                let position = Math.ceil(Math.random() * 61);
+                if (randomArray.includes(position)) {
+                    console.log('prevent repeating numbers');
+                    continue;
+                }
+                randomArray.push(position);
+
+            }
+            if (randomArray.length !== 8) {
+                let length = 8 - randomArray.length;
+                for (let index = 1; index <= length; index++) {
+                    randomArray.push(61 + index);
+                }
+            }
+            console.log("random array generated");
+            console.log(randomArray);
+            this.setState({
+                randomArray: randomArray
+            });
+        }
+    }
     // let randomArray=[];
     componentDidMount() {
         let randomArray = this.state.randomArray;
@@ -69,39 +189,40 @@ class Board extends Component {
 
     showModal = () => {
         this.setState({ visible: true });
-      };
-    
-      handleCancel = () => {
+    };
+
+    handleCancel = () => {
         this.setState({ visible: false });
-      };
-    
-      handleCreate = () => {
-       // const { form } = this.formRef.props;
+    };
+
+    handleCreate = () => {
+        // const { form } = this.formRef.props;
         this.props.form.validateFields((err, values) => {
-          if (err) {
-            return;
-          }
-          console.log('Received values of form: ', values);
-          let listPlayer=[];
+            if (err) {
+                return;
+            }
+            console.log('Received values of form: ', values);
+            let listPlayer = [];
             let x = window.localStorage.getItem("player");
-            if(x){
+            if (x) {
                 listPlayer = JSON.parse(x);
             }
             listPlayer.push(values);
-            window.localStorage.setItem("player",JSON.stringify(listPlayer));
-          this.props.form.resetFields();
-          this.setState({ visible: false });
-          this.props.showScore(this.state.counter);
+            window.localStorage.setItem("player", JSON.stringify(listPlayer));
+            this.props.form.resetFields();
+            this.setState({ visible: false });
+            this.props.showScore(this.state.counter);
         });
-      };
-    
-      saveFormRef = formRef => {
+    };
+
+    saveFormRef = formRef => {
         this.formRef = formRef;
-      };
-    
+    };
+
 
 
     flipButton = (button, x, y) => {
+        this.props.resetGame();
         let count = this.state.counter;
         let board = this.state.board;
         let colorboard = this.state.colorboard;
@@ -148,7 +269,8 @@ class Board extends Component {
             this.setState({
                 board: board,
                 randomArray: randomArray,
-                colorboard: colorboard
+                colorboard: colorboard,
+
             });
             console.log(board);
         }
@@ -219,12 +341,12 @@ class Board extends Component {
                 colorboard: colorboard,
                 savex: x,
                 savey: y,
-                counter: count,
-
+                counter: count
             });
         }
     }
     render() {
+
         const ButtonArray = this.state.board.map((buttonX, x) => {
             //{ console.log(buttonX) }
             return buttonX.map((button, y) => {
@@ -252,7 +374,7 @@ class Board extends Component {
                 );
             })
         })
-        const {   form } = this.props;
+        const { form } = this.props;
         const { getFieldDecorator } = form;
         return (
             <div>
@@ -260,7 +382,7 @@ class Board extends Component {
                     {ButtonArray}
                 </div>
 
-                
+
                 <Modal
                     visible={this.state.visible}
                     title="GAME FINISHED"
@@ -275,7 +397,7 @@ class Board extends Component {
                             })(<Input type="text" />)}
                         </Form.Item>
                         <Form.Item label="Your Score:">
-                            {getFieldDecorator('score', {initialValue : this.state.counter} )(<Input type="text" disabled="true" />)}
+                            {getFieldDecorator('score', { initialValue: this.state.counter })(<Input type="text" disabled="true" />)}
                         </Form.Item>
                     </Form>
                 </Modal>
