@@ -1,36 +1,16 @@
-/* .container{
-    text-align: center;
-    align-content: center;
-   } */
-   /* .buttonbox{    
-    width: 64px;
-    height: 64px;
-    display: inline-block; 
-   } */
+
 .board{
-  display: inline-flex;
+  margin: auto;
+  display: flex;
   flex-direction: row;
-  flex-wrap:wrap;
-   width: 549px; 
+  /* flex-wrap:wrap; */
+  justify-content: center;
+  align-content: center;
 }
-  
-  
-    .button{
-      height:59px;
-      width:59px;
-      margin: 2px;
-      text-align: center;
-      /* display: inline-block; */
-    }
-    /* .button {
-     height:60px;
-     width:60px;
-     margin:2px;
-     padding-left:0px;
-     padding-right:0px;
-     text-align: center;
-     display: inline-block;
-     -webkit-transition-duration: 0.4s; 
-     transition-duration: 0.4s;
-     cursor: pointer;
-   } */
+.button{
+    height:56px;
+    width:56px;
+     margin: 2px;
+    text-align: center; 
+}
+    

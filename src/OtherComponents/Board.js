@@ -42,61 +42,20 @@ class Board extends Component {
         savey: -1,
         counter: 56,
         visible: false,
-        //reset: this.props.resetgame,
-        flag: false
+        isformsubmit : false
+        
+       
     }
 
 
-    // init = ()=>{
-    //     let boardreset = [
-    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
-    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
-    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
-    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
-    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
-    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
-    //         ['?', '?', '?', '?', '?', '?', '?', '?'],
-    //         ['?', '?', '?', '?', '?', '?', '?', '?']
-    //       ];
-    //     //console.log(boardreset);
-    //     let randomArray = [];
-    //     let distanceArray = [];
-    //     let colorboard = [
-    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
-    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
-    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
-    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
-    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
-    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
-    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue'],
-    //         ['lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue', 'lightblue']
-    //       ];
-    //     let savex = -1;
-    //     //savex = -1;
-    //     let savey = -1;
-    //     savey = -1;
-    //     let counter = 56;
-    //     let visible = false;
-    //     this.setState({
-    //     board: boardreset,
-    //     //board: Array(8).fill(Array(8).fill('?')),
-    //     randomArray: randomArray,
-    //     distanceArray: distanceArray,
-    //     colorboard: colorboard,
-    //     savex: savex,
-    //     savey: savey,
-    //     counter: counter,
-    //     visible: visible,
-    //     flag: true
-    //    });
-    // }
+    
 
     componentWillReceiveProps(nextprops) {
         console.log("flag");
         console.log(nextprops);
         console.log(nextprops.resetgame);
         if ((nextprops.resetgame) === true) {
-            alert("I'm running");
+           
             let boardreset = [
                 ['?', '?', '?', '?', '?', '?', '?', '?'],
                 ['?', '?', '?', '?', '?', '?', '?', '?'],
@@ -187,13 +146,29 @@ class Board extends Component {
         });
     }
 
+
+    showStartModal = () => {
+        this.setState({ visiblestart: true });
+    };
+
+
     showModal = () => {
         this.setState({ visible: true });
+    };
+
+    handleCancelStart = () => {
+        this.setState({ visiblestart: false });
     };
 
     handleCancel = () => {
         this.setState({ visible: false });
     };
+
+    handleCreateStart = ()=>{
+        this.setState({
+            visiblestart: false
+        });
+    }
 
     handleCreate = () => {
         // const { form } = this.formRef.props;
@@ -210,7 +185,10 @@ class Board extends Component {
             listPlayer.push(values);
             window.localStorage.setItem("player", JSON.stringify(listPlayer));
             this.props.form.resetFields();
-            this.setState({ visible: false });
+            this.setState({ 
+                visible: false,
+                isformsubmit : true
+            });
             this.props.showScore(this.state.counter);
         });
     };
@@ -262,10 +240,10 @@ class Board extends Component {
                 }
             }
             randomArray.splice(index, 1);
-            // if(randomArray.length === 0){
-            //     //this.props.showScore(this.state.counter);
-            //     this.showModal();
-            // }
+            if(randomArray.length === 0){
+                //this.props.showScore(this.state.counter);
+                this.showModal();
+            }
             this.setState({
                 board: board,
                 randomArray: randomArray,
@@ -276,7 +254,13 @@ class Board extends Component {
         }
         else if (randomArray.length === 0) {
             console.log("Random Array Exhausted");
-            this.showModal();
+            if(this.state.isformsubmit === true){
+                this.showStartModal();
+            }
+            else{
+                this.showModal();
+            }
+            
             //this.props.showScore(this.state.counter);
         }
         else {
@@ -346,39 +330,56 @@ class Board extends Component {
         }
     }
     render() {
-
+        //let btn = null
         const ButtonArray = this.state.board.map((buttonX, x) => {
             //{ console.log(buttonX) }
-            return buttonX.map((button, y) => {
-                if (button === '$')
-                    button = <Icon type="sketch" style={{ fontSize: '50px' }} />
-                else if (button === '-->')
-                    button = <Icon type="arrow-right" style={{ fontSize: '40px' }} />
-                else if (button === '<--')
-                    button = <Icon type="arrow-left" style={{ fontSize: '40px' }} />
-                else if (button === 'Up')
-                    button = <Icon type="arrow-up" style={{ fontSize: '40px' }} />
-                else if (button === 'Down')
-                    button = <Icon type="arrow-down" style={{ fontSize: '40px' }} />
+            return(
+            <div className="board" > 
+                {  buttonX.map((button, y) => {
+                // if(button === '?'){
+                //     //btn = '?';
+                //     button = <Icon type="question" style={{ fontSize: '48px' }}/>
+                // }
+                if (button === '$'){
+                    //btn = '';
+                    button = <Icon type="sketch" style={{ fontSize: '25px' }} />
+
+                }  
+                else if (button === '-->'){
+                    //btn='';
+                    button = <Icon type="arrow-right" style={{ fontSize: '25px' }} />
+                }   
+                else if (button === '<--'){
+                    //btn='';
+                    button = <Icon type="arrow-left" style={{ fontSize: '25px' }} />
+                }
+                   
+                else if (button === 'Up'){
+                    //btn='';
+                    button = <Icon type="arrow-up" style={{ fontSize: '25px' }} />
+                }
+                    
+                else if (button === 'Down'){
+                    //btn='';
+                    button = <Icon type="arrow-down" style={{ fontSize: '25px' }} />
+                }
+                    
                 return (
-
-                    <div className="buttonarray">
-                        <button style={{ backgroundColor: this.state.colorboard[x][y] }} className='button'
-
-                            onClick={() => { button === '?' ? this.flipButton(button, x, y) : null }}>
-
-                            {button}
-
-                        </button>
-                    </div>
+                    <button style={{ backgroundColor: this.state.colorboard[x][y] }} className='button'
+                        onClick={() => { button === '?' ? this.flipButton(button, x, y) : null }}>
+                        {button}
+                    </button>
                 );
             })
+        }   
+            </div>
+        )
         })
         const { form } = this.props;
         const { getFieldDecorator } = form;
         return (
             <div>
-                <div className="board">
+                <div>
                     {ButtonArray}
                 </div>
 
@@ -400,6 +401,15 @@ class Board extends Component {
                             {getFieldDecorator('score', { initialValue: this.state.counter })(<Input type="text" disabled="true" />)}
                         </Form.Item>
                     </Form>
+                </Modal>
+                <Modal
+                    visible={this.state.visiblestart}
+                    title="Your Score is Updated."
+                    okText="Ok"
+                    onCancel={this.handleCancelStart}
+                    onOk={this.handleCreateStart}
+                >
+                   <div>Click on Start Game Button</div>
                 </Modal>
             </div>
         );

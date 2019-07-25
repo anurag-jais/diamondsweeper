@@ -6,7 +6,7 @@ import { Modal, Button } from 'antd';
 
 class App extends Component {
   state = {
-    isGamefinish : false,
+    isGamefinish: false,
     score: 0,
     isStartGameClicked: false,
     listPlayer: [],
@@ -34,82 +34,95 @@ class App extends Component {
     });
   };
 
-  resetGame = ()=>{
+  resetGame = () => {
     this.setState({
-      resetgame : false
+      resetgame: false
     });
   }
-  showScore = (counter) =>{
+  showScore = (counter) => {
     this.setState({
-      isGamefinish : true,
-      score: counter
-    });
-  }
-
-  startGame = ()=>{
-    let clicked = this.state.isStartGameClicked;
-    
-    this.setState({
-      isStartGameClicked : true,
-      isGamefinish: false,
-      resetgame: true
+      isGamefinish: true,
+      score: counter,
+      isStartGameClicked: false,
       
     });
   }
 
-  MakeLeaderBoard = ()=>{
-    function compare(a,b){
-      if(parseInt(a.score)<parseInt(b.score))
+  startGame = () => {
+    let clicked = this.state.isStartGameClicked;
+
+    this.setState({
+      isStartGameClicked: true,
+      isGamefinish: false,
+      resetgame: true
+
+    });
+  }
+
+  MakeLeaderBoard = () => {
+    function compare(a, b) {
+      if (parseInt(a.score) < parseInt(b.score))
         return 1;
-      if(parseInt(a.score)>parseInt(b.score))
+      if (parseInt(a.score) > parseInt(b.score))
         return -1;
       else
         return 0;
     }
     let isleaderBoardClicked = this.state.isleaderBoardClicked;
-    let listPlayer=[];
+    let listPlayer = [];
     let x = window.localStorage.getItem("player");
-    if(x){
-        listPlayer = JSON.parse(x);
+    if (x) {
+      listPlayer = JSON.parse(x);
     }
     console.log(listPlayer);
-    listPlayer.sort( compare );
+    listPlayer.sort(compare);
     listPlayer.splice(10);
     this.showModal();
     this.setState({
       isleaderBoardClicked: !isleaderBoardClicked,
-      listPlayer:listPlayer
+      listPlayer: listPlayer
     });
-    
-  } 
+
+  }
   render() {
-   
+
     return (
       <div className="App">
-        <h3>Diamond Sweeper</h3>
-        <h4>Your Score:</h4>
-        {this.state.isGamefinish === true ? this.state.score : null }
+        <br/>
+        <h2>Diamond Sweeper</h2>
+
         <br></br>
-        <Button onClick={this.startGame}>Start Game</Button>
-        <Button onClick= {this.MakeLeaderBoard}>LeaderBoard</Button>
-        {this.state.isStartGameClicked === true ? <Board  resetgame = {this.state.resetgame} resetGame = {this.resetGame} showScore = {this.showScore}/> : null}
+        <div>
+          <Button onClick={this.startGame}>Start Game</Button>
+          <Button onClick={this.MakeLeaderBoard}>LeaderBoard</Button>
+        </div>
+        {this.state.isGamefinish === true ?
+          <div>
+            <h4>Your Score:</h4>
+            {this.state.score}
+          </div>
+          : null}
+        {this.state.isStartGameClicked === true || this.state.isGamefinish === true ? <Board resetgame={this.state.resetgame}
+          resetGame={this.resetGame} showScore={this.showScore} /> : null}
+
         
         {
-        this.state.isleaderBoardClicked === true ? 
-        <Modal
-        title="LeaderBoard"
-        visible={this.state.visible}
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
-      >
-        {this.state.listPlayer.map(player =>{
-         return <table>
+          this.state.isleaderBoardClicked === true ?
+            <Modal 
+              //modalOptions={{ dismissible: false }}
+              title="LeaderBoard"
+              visible={this.state.visible}
+              onOk={this.handleOk}
+              onCancel={this.handleCancel}
+            >
+              {this.state.listPlayer.map(player => {
+                return <table>
                   <tr><td>{player.name}</td><td></td><td></td><td>{player.score}</td></tr>
-                </table> 
-         })}
-      </Modal>
-         : null }
-       {/* {this.state.isleaderBoardClicked === true ? {displayplayerlist}: null } */}
+                </table>
+              })}
+            </Modal>
+            : null}
+        {/* {this.state.isleaderBoardClicked === true ? {displayplayerlist}: null } */}
       </div>
     );
   }
